@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Earth and Space Architects</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&display=swap">
+<style>
+:root{--ink:#000;--paper:#fff;--grey:#8a8a8a;--line:#d9d9d9;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+.rv{opacity:0;transform:translateY(56px);transition:opacity .9s ease,transform 1.2s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Archivo','Helvetica Neue',Arial,sans-serif;font-stretch:100%;line-height:1.5}
+a{color:inherit}
+:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+img{display:block;max-width:100%}
+.nav{height:56px;display:flex;justify-content:space-between;align-items:center;padding:0 24px;border-bottom:1px solid var(--ink)}
+.nav b{font-stretch:125%;font-weight:700;letter-spacing:-.01em;font-size:15px}
+.nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0;font-size:14px}
+.nav a{text-decoration:none}.nav a:hover{text-decoration:underline;text-underline-offset:4px}
+/* home */
+#home{height:calc(100vh - 112px);min-height:520px;background:#fff;padding:0;position:relative}
+.mosaic{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,1fr);gap:10px;padding:10px;background:#fff}
+.tile{position:relative;overflow:hidden;background:#222;cursor:pointer;border:0;padding:0;color:#fff;text-align:left}
+.tile:nth-child(1){grid-area:1/1/3/3}.tile:nth-child(2){grid-area:1/3/2/5}.tile:nth-child(3){grid-area:1/5/3/7}
+.tile:nth-child(4){grid-area:2/3/4/4}.tile:nth-child(5){grid-area:2/4/3/5}.tile:nth-child(6){grid-area:3/1/5/2}
+.tile:nth-child(7){grid-area:3/2/4/3}.tile:nth-child(8){grid-area:3/4/5/6}.tile:nth-child(9){grid-area:3/6/5/7}.tile:nth-child(10){grid-area:4/2/5/4}
+.tile img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .6s}
+.tile.swap img{opacity:0}
+.tile:hover img,.tile:focus-visible img{transform:scale(1.08)}
+.tile span{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 12px;font-size:13px;background:linear-gradient(transparent,rgba(0,0,0,.7));transform:translateY(100%);transition:transform .4s}
+.tile:hover span,.tile:focus-visible span{transform:none}
+.hero-title{position:absolute;left:24px;bottom:24px;z-index:5;color:#fff;font-stretch:125%;font-weight:800;font-size:clamp(28px,5vw,72px);line-height:.95;letter-spacing:-.03em;margin:0;text-shadow:0 2px 24px rgba(0,0,0,.45);pointer-events:none}
+.hero{position:absolute;inset:0;background:#000;overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity 1.2s ease,visibility 0s 1.2s}
+.slide.on{opacity:1;visibility:visible;transition-delay:0s}
+.slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.07);transition:transform 7s linear}
+.slide.on img{transform:scale(1)}
+.hctrl{position:absolute;right:24px;bottom:24px;z-index:6;display:flex;align-items:center;gap:10px;color:#fff;font-size:13px;font-variant-numeric:tabular-nums}
+.hctrl button{font:inherit;font-size:16px;width:36px;height:36px;border-radius:50%;border:1px solid #fff;background:rgba(0,0,0,.25);color:#fff;cursor:pointer}
+.hctrl button:hover{background:#fff;color:#000}
+.reel{--m:5;overflow:hidden;margin-bottom:56px}
+.rt{display:flex;gap:12px}
+.rt img{flex:0 0 calc((100% - 12px*(var(--m) - 1))/var(--m));min-width:0;aspect-ratio:3/2;object-fit:cover}
+/* sections */
+section{padding:112px 24px}
+h2{font-stretch:125%;font-weight:800;font-size:clamp(32px,5vw,64px);letter-spacing:-.03em;line-height:1;margin:0 0 48px}
+/* contact */
+#contact{padding:0;background:#000;color:#fff}
+.strip{height:56px;display:flex;align-items:center;gap:32px;padding:0 24px;font-size:14px}
+.strip a{text-decoration:none}.strip a:hover{text-decoration:underline;text-underline-offset:4px}
+.mapbtn{font:inherit;font-size:14px;background:none;color:#fff;border:1px solid #fff;padding:5px 16px;border-radius:99px;cursor:pointer;margin-left:auto}
+.mapbtn:hover{background:#fff;color:#000}
+.mapwrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s cubic-bezier(.2,.7,.2,1)}
+.mapwrap.open{grid-template-rows:1fr}
+.mapwrap>div{overflow:hidden;min-height:0}
+.map{height:min(55vh,420px);filter:grayscale(1) contrast(1.1)}
+.map iframe{width:100%;height:100%;border:0;display:block}
+.small{color:var(--grey);font-size:14px}
+/* portfolio */
+#portfolio{border-top:1px solid var(--ink);padding-top:72px}
+.phead,.thead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.phead{margin-bottom:32px}
+.ctrl{display:flex;gap:8px}.ctrl[hidden]{display:none}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filters button{font:inherit;font-size:14px;background:none;border:1px solid var(--ink);padding:6px 16px;border-radius:99px;cursor:pointer}
+.filters button:hover{background:#eee}
+.filters button[aria-pressed=true]{background:var(--ink);color:#fff}
+.detail{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s cubic-bezier(.2,.7,.2,1)}
+.detail.open{grid-template-rows:1fr;margin:40px 0 56px}
+.detail>div{overflow:hidden;min-height:0}
+.dgrid{padding:32px 0 8px;border-top:1px solid var(--ink)}
+.dmeta{display:grid;grid-template-columns:1.2fr 1fr 1.4fr;gap:24px 48px;align-items:start;margin-bottom:40px}
+.dmeta h3{font-stretch:125%;font-weight:800;font-size:clamp(30px,4vw,56px);line-height:1;letter-spacing:-.03em;margin:0}
+.dmeta dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0;font-size:14px}
+.dmeta dt{color:var(--grey)}.dmeta dd{margin:0}
+.dmeta p{font-size:15px;max-width:52ch;margin:0 0 20px}
+.close{font:inherit;font-size:14px;background:none;border:1px solid var(--ink);padding:6px 16px;border-radius:99px;cursor:pointer}
+.close:hover{background:var(--ink);color:#fff}
+.dimgs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 -24px}
+.dimgs img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.dimgs img:first-child{grid-column:1/-1;aspect-ratio:16/8}
+.carousel{--n:3;overflow:hidden}
+.track{display:flex;gap:16px}
+.card{flex:0 0 calc((100% - 16px*(var(--n) - 1))/var(--n));min-width:0;background:none;border:0;padding:0;text-align:left;font:inherit;cursor:pointer}
+.card .ph{aspect-ratio:4/3;overflow:hidden;background:#eee}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.card:hover img,.card:focus-visible img{transform:scale(1.05)}
+.card h3{font-size:17px;font-weight:600;margin:10px 0 0}
+.card.sel h3{text-decoration:underline;text-underline-offset:4px}
+.card[hidden]{display:none}
+/* team */
+#team{background:#000;color:#fff}
+#team .close{color:#fff;border-color:#fff}#team .close:hover{background:#fff;color:#000}
+.thead h2{margin-bottom:40px}
+.people{overflow:hidden}
+#people{display:flex}
+.person{flex:0 0 100%;min-width:0;display:grid;grid-template-columns:auto minmax(0,640px);justify-content:center;gap:40px;align-items:stretch;isolation:isolate}
+.ptxt{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:32px;min-width:0}
+.idx{position:absolute;top:6px;right:0;font-size:13px;color:#999}
+.pbot{max-width:46ch}
+.person img{height:min(72vh,640px);width:auto;max-width:100%;aspect-ratio:3/4;object-fit:cover}
+.person h3{margin:0 0 0 -150px;position:relative;z-index:2;color:#fff;mix-blend-mode:difference;font-stretch:125%;font-weight:800;font-size:clamp(48px,8.5vw,128px);letter-spacing:-.04em;line-height:.88}
+.person .role{color:#999;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 20px}
+.person blockquote{margin:0 0 24px;font-size:clamp(20px,2vw,28px);line-height:1.3;font-stretch:110%}
+.person p{font-size:15px;margin:0 0 12px;color:#ddd;max-width:46ch}
+.person .prop{color:#999;font-size:13px}
+/* leftovers */
+#left{padding:112px 24px 0}
+.pile-unused{display:none}
+
+
+footer{position:relative;z-index:2;background:#fff;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--ink);padding:20px 24px;font-size:13px;margin:0 -24px}
+@media(max-width:860px){
+.nav ul{gap:14px;font-size:13px}.nav b{font-size:13px}
+#home{height:70vh;min-height:360px}.reel{--m:2}.hctrl{right:16px;bottom:16px}
+.strip{padding:0 16px;gap:16px;font-size:13px}
+.carousel{--n:1}
+.dmeta{grid-template-columns:1fr}.dimgs{margin:0 -16px}
+.person{grid-template-columns:1fr;gap:0}.person img{width:100%;height:auto}.person h3{margin:-.55em 0 24px 12px;font-size:clamp(44px,15vw,80px)}.ptxt{gap:20px}
+section{padding:80px 16px}#left{padding:80px 16px 0}footer{margin:0 -16px;padding:20px 16px}
+}
+@media(max-width:480px){.nav ul li:nth-child(n+3){display:none}.dimgs{grid-template-columns:1fr}.strip .loc{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <b>Earth and Space Architects</b>
+  <ul><li><a href="#contact">Contact</a></li><li><a href="#portfolio">Portfolio</a></li><li><a href="#team">Team</a></li></ul>
+</header>
+
+<main>
+<section id="home" aria-label="Selected projects">
+  <div class="hero" id="hero"></div>
+  <h1 class="hero-title">Earth and Space<br>Architects</h1>
+  <div class="hctrl"><span id="heroCount"></span><button id="hPrev" aria-label="Previous image">&larr;</button><button id="hNext" aria-label="Next image">&rarr;</button></div>
+</section>
+
+<section id="contact" aria-label="Contact">
+  <div class="strip">
+    <a href="mailto:studio@earthandspace.example">studio@earthandspace.example</a>
+    <a href="tel:+000000000000">+00 000 000 000</a>
+    <span class="loc">12 Studio Lane, City, Country</span>
+    <button class="mapbtn" id="mapBtn" aria-expanded="false" aria-controls="mapWrap">Show map</button>
+  </div>
+  <div class="mapwrap" id="mapWrap"><div><div class="map"><iframe id="mapFrame" title="Studio location" data-src="https://www.google.com/maps?q=Colombo&output=embed"></iframe></div></div></div>
+</section>
+
+<section id="portfolio">
+  <h2>Portfolio</h2>
+  <div class="phead"><div class="filters" id="filters" role="group" aria-label="Filter projects"></div><div class="ctrl" id="pCtrl"><button class="close" id="pPrev">Previous</button><button class="close" id="pNext">Next</button></div></div>
+  <div class="carousel" id="carousel"><div class="track" id="grid"></div></div>
+  <div class="detail" id="detail" aria-live="polite"><div id="detailInner"></div></div>
+</section>
+
+<section id="team">
+  <div class="thead"><h2>Team</h2><div class="ctrl"><button class="close" id="tPrev">Previous</button><button class="close" id="tNext">Next</button></div></div>
+  <div class="people"><div id="people"></div></div>
+</section>
+
+<section id="left" style="padding-bottom:0">
+  <div class="reel" aria-label="The team at work"><div class="rt" id="pile"></div></div>
+  <footer><span>© 2026 Earth and Space Architects</span><span>studio@earthandspace.example</span><span><a href="#home">Back to top</a></span></footer>
+</section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+// Placeholder imagery: generated SVG "photographs". Replace with real project photos.
+// ===== IMAGE SETTINGS: replace each link below with your own. Use '' to show the placeholder. =====
+const IMAGES={
+ projects:[
+  [ // Laterite House
+   'file:///C:/Users/User/Documents/es/c1.jpg', // cover
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg'],
+  [ // Salt Pavilion
+   'file:///C:/Users/User/Documents/es/c1.jpg', // cover
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg'],
+  [ // North Court Offices
+   'file:///C:/Users/User/Documents/es/c1.jpg', // cover
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg'],
+  [ // Hollow Library
+   'file:///C:/Users/User/Documents/es/c1.jpg', // cover
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg'],
+  [ // Studio Ten
+   'file:///C:/Users/User/Documents/es/c1.jpg', // cover
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg'],
+  [ // Terrace Row
+   'file:///C:/Users/User/Documents/es/c1.jpg', // cover
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg'],
+  [ // Meridian Hotel
+   'file:///C:/Users/User/Documents/es/c1.jpg', // cover
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg'],
+  [ // Quiet Room
+   'file:///C:/Users/User/Documents/es/c1.jpg', // cover
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg'],
+  [ // Dune Chapel
+   'file:///C:/Users/User/Documents/es/c1.jpg', // cover
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg'],
+  [ // Kiln Market
+   'file:///C:/Users/User/Documents/es/c1.jpg', // cover
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg',
+   'file:///C:/Users/User/Documents/es/c1.jpg']
+ ],
+ hero:[ // home carousel, 15 images, in display order
+  'file:///C:/Users/User/Documents/es/c1.jpg', // 1
+  'file:///C:/Users/User/Documents/es/c2.jpg', // 2
+  'file:///C:/Users/User/Documents/es/c3.jpg', // 3
+  'file:///C:/Users/User/Documents/es/c4.jpg', // 4
+  'file:///C:/Users/User/Documents/es/c5.jpg', // 5
+  'file:///C:/Users/User/Documents/es/c6.jpg', // 6
+  'file:///C:/Users/User/Documents/es/c7.jpg', // 7
+  'file:///C:/Users/User/Documents/es/c8.jpg', // 8
+  'file:///C:/Users/User/Documents/es/c9.jpg', // 9
+  'file:///C:/Users/User/Documents/es/c10.jpg', // 10
+  'file:///C:/Users/User/Documents/es/c11.jpg', // 11
+  'file:///C:/Users/User/Documents/es/c12.jpg', // 12
+  'file:///C:/Users/User/Documents/es/c13.jpg', // 13
+  'file:///C:/Users/User/Documents/es/c14.jpg', // 14
+  'file:///C:/Users/User/Documents/es/c15.jpg'  // 15
+ ],
+ team:[
+  'file:///C:/Users/User/Documents/es/t1.jpg', // Amara Perera
+  'file:///C:/Users/User/Documents/es/t2.jpg', // Daniel Weiss
+  'file:///C:/Users/User/Documents/es/t3.jpg', // Mei Tanaka
+  'file:///C:/Users/User/Documents/es/t4.jpg'  // Rohan Silva
+ ],
+ studio:[ // team at work: narrow strip at the bottom, 14 images
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg',
+  'file:///C:/Users/User/Documents/es/c1.jpg']
+};
+// Project cover = first image of each project.
+// ====================================================================================
+function pick(url,seed,hue){return url?url+'#'+seed+'-'+hue:artSvg(seed,hue)}
+document.addEventListener('error',e=>{const i=e.target;
+  if(i.tagName==='IMG'&&!i.src.startsWith('data:')){const m=i.src.match(/#(\d+)-(\d+)$/);if(m)i.src=artSvg(+m[1],+m[2])}},true);
+function artSvg(seed,hue){
+  let s=seed*7919+13;const r=n=>{s=(s*9301+49297)%233280;return s/233280*n};
+  const L=(a,b)=>Math.round(a+r(b-a));
+  let g='';
+  g+=`<defs><linearGradient id="g${seed}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="hsl(${hue},${L(10,35)}%,${L(62,88)}%)"/><stop offset="1" stop-color="hsl(${hue},8%,${L(30,50)}%)"/></linearGradient></defs>`;
+  g+=`<rect width="400" height="300" fill="url(#g${seed})"/>`;
+  if(r(1)>.5)g+=`<circle cx="${L(60,340)}" cy="${L(40,110)}" r="${L(14,34)}" fill="hsl(${hue+20},40%,92%)" opacity=".85"/>`;
+  g+=`<rect y="${L(215,245)}" width="400" height="90" fill="hsl(${hue},12%,${L(14,28)}%)"/>`;
+  const n=L(3,6);
+  for(let i=0;i<n;i++){
+    const w=L(50,140),h=L(60,170),x=L(-10,330),y=235-h;
+    g+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="hsl(${hue+L(-10,10)},${L(4,18)}%,${L(8,78)}%)"/>`;
+    if(r(1)>.4){const k=L(2,5);for(let j=1;j<k;j++)g+=`<rect x="${x+8}" y="${y+j*h/k-4}" width="${w-16}" height="${Math.max(6,h/k-14)}" fill="hsl(${hue},20%,${L(70,92)}%)" opacity=".55"/>`}
+    if(r(1)>.75)g+=`<path d="M${x} ${235} A${w/2} ${w/2} 0 0 1 ${x+w} 235Z" fill="hsl(${hue},10%,${L(10,30)}%)" opacity=".8"/>`;
+  }
+  return 'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">${g}</svg>`);
+}
+const projects=[
+ {n:'Laterite House',t:'Residential',y:2025,l:'Hill country',a:'420 m²',h:28,d:'A family home cut into a hillside, built from rammed earth and local stone. Deep verandas keep the interior cool and frame the valley below.'},
+ {n:'Salt Pavilion',t:'Cultural',y:2024,l:'Coastal reserve',a:'1,150 m²',h:200,d:'An open gallery and event space on a salt flat. A single folded roof plane shades the interior and collects rainwater.'},
+ {n:'North Court Offices',t:'Commercial',y:2024,l:'City centre',a:'6,800 m²',h:215,d:'A courtyard workplace with timber floors and a cooled central void. Shared decks on every level replace the corridor.'},
+ {n:'Hollow Library',t:'Cultural',y:2023,l:'University campus',a:'3,200 m²',h:35,d:'A reading house arranged around a tall light well. Study alcoves step down along its edge.'},
+ {n:'Studio Ten',t:'Interiors',y:2025,l:'Warehouse district',a:'260 m²',h:0,d:'A shell-and-core fit-out for a design practice, with exposed concrete, oak joinery and one long working table.'},
+ {n:'Terrace Row',t:'Residential',y:2023,l:'Old town',a:'1,900 m²',h:20,d:'Twelve narrow homes that share a stepped roof garden. Each has a private courtyard at its core.'},
+ {n:'Meridian Hotel',t:'Commercial',y:2022,l:'Seafront',a:'9,400 m²',h:190,d:'A 60-room hotel with a stepped section so every room has a terrace. Screens of fired clay filter the afternoon sun.'},
+ {n:'Quiet Room',t:'Interiors',y:2022,l:'Private clients',a:'85 m²',h:30,d:'A meditation and music room lined in lime plaster, with a skylight that tracks the sun across the day.'},
+ {n:'Dune Chapel',t:'Cultural',y:2021,l:'Northern shore',a:'140 m²',h:40,d:'A small chapel of whitewashed masonry. One slot window lets a blade of light cross the floor at noon.'},
+ {n:'Kiln Market',t:'Commercial',y:2021,l:'Riverside',a:'2,300 m²',h:15,d:'A covered market in brick and steel, open on all sides, with stalls on a flexible grid.'}
+];
+projects.forEach((p,i)=>{p.id=i;p.imgs=[0,1,2,3,4].map(k=>pick(IMAGES.projects[i][k],i*10+k+1,p.h))});
+const $=s=>document.querySelector(s);
+
+// Home hero carousel
+const hero=$('#hero'),heroHues=[28,200,215,35,0,20,190,30,40,15];
+IMAGES.hero.forEach((u,i)=>{const d=document.createElement('div');d.className='slide'+(i?'':' on');
+  d.innerHTML=`<img alt="Project image ${i+1}" src="${pick(u,700+i,heroHues[i%10])}">`;hero.append(d)});
+const hs=[...hero.children],hc=$('#heroCount');let hi=0,hT;
+const setHero=n=>{hs[hi].classList.remove('on');hi=(n+hs.length)%hs.length;hs[hi].classList.add('on');hc.textContent=String(hi+1).padStart(2,'0')+' / '+hs.length};
+const hStart=()=>{clearInterval(hT);if(!matchMedia('(prefers-reduced-motion:reduce)').matches)hT=setInterval(()=>{if(!document.hidden&&vis.home)setHero(hi+1)},4500)};
+setHero(0);hStart();
+$('#hPrev').onclick=()=>{setHero(hi-1);hStart()};$('#hNext').onclick=()=>{setHero(hi+1);hStart()};
+
+// Portfolio
+const types=['All',...new Set(projects.map(p=>p.t))];
+const filters=$('#filters'),grid=$('#grid'),detail=$('#detail'),inner=$('#detailInner');
+types.forEach((t,i)=>{
+  const b=document.createElement('button');b.textContent=t;b.setAttribute('aria-pressed',i==0);
+  b.onclick=()=>{[...filters.children].forEach(c=>c.setAttribute('aria-pressed',c===b));
+    build(t)};
+  filters.append(b);
+});
+const nVis=()=>innerWidth<=860?1:3,pCtrl=$('#pCtrl'),car=$('#carousel');
+function slider(el,gap,min){let busy=false;return dir=>{
+  if(busy||el.children.length<=min())return;busy=true;
+  const w=el.firstElementChild.offsetWidth+gap,T='transform .8s cubic-bezier(.2,.7,.2,1)';
+  if(dir>0){el.style.transition=T;el.style.transform=`translateX(${-w}px)`;
+    setTimeout(()=>{el.append(el.firstElementChild);el.style.transition='none';el.style.transform='none';busy=false},820)}
+  else{el.prepend(el.lastElementChild);el.style.transition='none';el.style.transform=`translateX(${-w}px)`;el.offsetWidth;
+    el.style.transition=T;el.style.transform='none';setTimeout(()=>busy=false,820)}
+}}
+const pStep=slider(grid,16,nVis);
+function build(t){
+  grid.innerHTML='';grid.style.transition='none';grid.style.transform='none';
+  projects.filter(p=>t==='All'||p.t===t).forEach(p=>{
+    const c=document.createElement('button');c.className='card';c.dataset.t=p.t;c.dataset.id=p.id;
+    c.innerHTML=`<div class="ph"><img alt="${p.n}" src="${p.imgs[0]}"></div><h3>${p.n}</h3><div class="small">${p.t}, ${p.y}</div>`;
+    c.onclick=()=>openProject(p.id,true);grid.append(c);
+  });
+  pCtrl.hidden=grid.children.length<=nVis();
+}
+build('All');
+$('#pPrev').onclick=()=>pStep(-1);$('#pNext').onclick=()=>pStep(1);
+let hov=false;car.onmouseenter=()=>hov=true;car.onmouseleave=()=>hov=false;
+const calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(!calm)setInterval(()=>{if(!hov&&!document.hidden&&vis.portfolio&&!detail.classList.contains('open'))pStep(1)},3500);
+
+// Contact strip + map
+const mapWrap=$('#mapWrap'),mapBtn=$('#mapBtn'),mapFrame=$('#mapFrame');
+function setMap(o){mapWrap.classList.toggle('open',o);mapBtn.setAttribute('aria-expanded',o);mapBtn.textContent=o?'Close map':'Show map';
+  if(o){if(!mapFrame.src)mapFrame.src=mapFrame.dataset.src;setTimeout(()=>goTo($('#contact')),60)}}
+mapBtn.onclick=()=>setMap(!mapWrap.classList.contains('open'));
+document.querySelector('.nav a[href="#contact"]').addEventListener('click',()=>setMap(true));
+function openProject(id,scroll){
+  const p=projects[id];
+  inner.innerHTML=`<div class="dgrid"><div class="dmeta"><h3>${p.n}</h3>
+   <dl><dt>Type</dt><dd>${p.t}</dd><dt>Year</dt><dd>${p.y}</dd><dt>Location</dt><dd>${p.l}</dd><dt>Area</dt><dd>${p.a}</dd></dl>
+   <div><p>${p.d}</p><button class="close" id="closeBtn">Close project</button></div></div>
+   <div class="dimgs">${p.imgs.map((s,i)=>`<img alt="${p.n}, image ${i+1}" src="${s}">`).join('')}</div></div>`;
+  detail.classList.add('open');
+  [...grid.children].forEach(c=>c.classList.toggle('sel',+c.dataset.id===id));
+  $('#closeBtn').onclick=()=>{detail.classList.remove('open');[...grid.children].forEach(c=>c.classList.remove('sel'));goTo($('#filters'),-100)};
+  setTimeout(()=>goTo(filters),60);
+}
+
+// Team
+const team=[['Amara Perera','Principal architect','Founded the practice in 2008. Leads design on cultural and civic work.',20],
+['Daniel Weiss','Partner, technical','Oversees detailing and site delivery. Previously worked on timber and masonry restoration.',200],
+['Mei Tanaka','Senior architect','Runs residential projects from first sketch to handover.',30],
+['Rohan Silva','Interiors lead','Designs interiors and furniture, and builds most of the studio’s models.',0]];
+const quotes=['“A building should feel like it grew there.”','“Start with the light, then draw the walls.”','“Every house is a conversation with its neighbours.”','“Make it by hand first.”'];
+const props=['Always on the desk: a 2B pencil','Always on the desk: a brass plumb bob','Always on the desk: a roll of tracing paper','Always on the desk: a bag of balsa offcuts'];
+$('#people').innerHTML=team.map((m,i)=>`<article class="person"><img alt="Portrait of ${m[0]}" src="${pick(IMAGES.team[i],500+i,m[3])}"><div class="ptxt"><span class="idx">${String(i+1).padStart(2,'0')}</span><h3>${m[0].replace(' ','<br>')}</h3><div class="pbot"><p class="role">${m[1]}</p><blockquote>${quotes[i]}</blockquote><p>${m[2]}</p><p class="prop">${props[i]}</p></div></div></article>`).join('');
+const tStep=slider($('#people'),0,()=>1);
+$('#tPrev').onclick=()=>tStep(-1);$('#tNext').onclick=()=>tStep(1);
+let tHov=false;$('.people').onmouseenter=()=>tHov=true;$('.people').onmouseleave=()=>tHov=false;
+if(!calm)setInterval(()=>{if(!tHov&&!document.hidden&&vis.team)tStep(1)},6500);
+
+// Studio reel (team at work)
+const reel=$('#pile');
+IMAGES.studio.forEach((u,i)=>{const im=document.createElement('img');im.alt='';im.src=pick(u,900+i,projects[i%projects.length].h);reel.append(im)});
+const rStep=slider(reel,12,()=>innerWidth<=860?2:5);
+if(!calm)setInterval(()=>{if(!document.hidden&&vis.left)rStep(1)},2500);
+
+// ===== Smooth scroll + section reveal =====
+let lenis=null;
+if(window.Lenis&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  lenis=new Lenis({duration:1.25,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:true});
+  const raf=t=>{lenis.raf(t);requestAnimationFrame(raf)};requestAnimationFrame(raf);
+}
+function goTo(el,off=0){lenis?lenis.scrollTo(el,{offset:off,duration:1.4}):el.scrollIntoView({behavior:'smooth',block:'start'})}
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const t=document.querySelector(a.getAttribute('href'));if(t&&lenis){e.preventDefault();goTo(t)}}));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -4% 0px'});
+[['#portfolio',['h2','.phead','.carousel']],['#team',['.thead','.people']],['#left',['.reel']]].forEach(([sec,list])=>{
+  list.forEach((q,i)=>{const el=document.querySelector(sec+' '+q);if(!el)return;
+    el.classList.add('rv');el.style.setProperty('--d',(i*.12)+'s');io.observe(el)});
+});
+
+// ===== Performance =====
+const vis={home:true,portfolio:true,team:true,left:true};
+const vio=new IntersectionObserver(es=>es.forEach(e=>vis[e.target.id]=e.isIntersecting));
+['home','portfolio','team','left'].forEach(id=>vio.observe(document.getElementById(id)));
+document.querySelectorAll('img').forEach(i=>i.decoding='async');
+new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType===1)(n.tagName==='IMG'?[n]:n.querySelectorAll('img')).forEach(i=>i.decoding='async')}))).observe(document.body,{childList:true,subtree:true});
+</script>
+</body>
+</html>
